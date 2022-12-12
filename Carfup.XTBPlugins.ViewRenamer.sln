@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32519.111
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTBPlugins.ViewRenamer", "ViewRenamer\XTBPlugins.ViewRenamer.csproj", "{CC97E426-45D6-4205-9DD1-D5AD0C1B18D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC97E426-45D6-4205-9DD1-D5AD0C1B18D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC97E426-45D6-4205-9DD1-D5AD0C1B18D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC97E426-45D6-4205-9DD1-D5AD0C1B18D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC97E426-45D6-4205-9DD1-D5AD0C1B18D3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {09C261E7-BA2F-4D46-8225-22EAA25714CF}
+	EndGlobalSection
+EndGlobal
