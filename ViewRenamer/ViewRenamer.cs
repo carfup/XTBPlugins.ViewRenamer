@@ -90,15 +90,15 @@ namespace Carfup.XTBPlugins.ViewRenamer
                 LogInfo("Connection has changed to: {0}", detail.WebApplicationUrl);
             }
 
-            ExecuteMethod(LoadEntities);
+            //ExecuteMethod(LoadEntities);
         }
 
         private void lvEntities_DoubleClick(object sender, EventArgs e)
         {
-            ExecuteMethod(GetViewsForSelectedEntity);
+            ExecuteMethod(GetViewsForSelectedEntities);
         }
 
-        private void GetViewsForSelectedEntity()
+        private void GetViewsForSelectedEntities()
         {
             var selectedItems = new List<string>();
 
@@ -133,18 +133,14 @@ namespace Carfup.XTBPlugins.ViewRenamer
                             crmViews.Add(crmView);
                         }
 
-                        RetrieveLocLabelsRequest request;
-                        RetrieveLocLabelsResponse response;
-
-
                         // Names
-                        request = new RetrieveLocLabelsRequest
+                        RetrieveLocLabelsRequest request = new RetrieveLocLabelsRequest
                         {
                             AttributeName = "name",
                             EntityMoniker = new EntityReference("savedquery", view.Id)
                         };
 
-                        response = (RetrieveLocLabelsResponse)Service.Execute(request);
+                        RetrieveLocLabelsResponse response = (RetrieveLocLabelsResponse)Service.Execute(request);
                         foreach (var locLabel in response.Label.LocalizedLabels)
                         {
                             crmView.Names.Add(locLabel.LanguageCode, locLabel.Label);
@@ -179,10 +175,11 @@ namespace Carfup.XTBPlugins.ViewRenamer
         {
             lvEntities.Items.Clear();
             dgvViewsToRename.Columns.Clear();
+            dataTable.Columns.Clear();
 
             WorkAsync(new WorkAsyncInfo
             {
-                Message = "Getting the Entities",
+                Message = "Getting the Tables ...",
                 Work = (worker, args) =>
                 {
                     languages = dm.LoadLanguages();
@@ -196,17 +193,14 @@ namespace Carfup.XTBPlugins.ViewRenamer
                         log.LogData(EventType.Exception, LogAction.LoadEntities, args.Error);
                     }
 
-                    ConcurrentBag<ListViewItem> cbItems = new ConcurrentBag<ListViewItem>();
-                    foreach (var entity in entities)
+                    List<ListViewItem> cbItems = new List<ListViewItem>();
+                    cbItems.AddRange(entities.Select(entity => new ListViewItem()
                     {
-                        var item = new ListViewItem()
-                        {
-                            Text = entity.displayName,
-                            Tag = entity.logicalName
-                        };
-                        cbItems.Add(item);
-                    }
-                    lvEntities.Items.AddRange((ListViewItem[])cbItems.ToArray());
+                        Text = entity.displayName,
+                        Tag = entity.logicalName
+                    }));
+                 
+                    lvEntities.Items.AddRange(cbItems.ToArray());
 
                     foreach (var language in languages.OrderBy(x => x))
                     {
@@ -288,25 +282,25 @@ namespace Carfup.XTBPlugins.ViewRenamer
 
         private void tbFilter_TextChanged(object sender, EventArgs e)
         {
+            if (tbFilter.Text == "" || tbFilter.Text.Length < 3)
+                return; 
+
             lvEntities.Items.Clear();
             var newList = entities.Where(x => x.displayName.ToLower().Contains(tbFilter.Text.ToLower()));
 
-            ConcurrentBag<ListViewItem> cbItems = new ConcurrentBag<ListViewItem>();
-            foreach (var entity in newList)
+            List<ListViewItem> cbItems = new List<ListViewItem>();
+            cbItems.AddRange(newList.Select(entity => new ListViewItem()
             {
-                var item = new ListViewItem()
-                {
-                    Text = entity.displayName,
-                    Tag = entity.logicalName
-                };
-                cbItems.Add(item);
-            }
-            lvEntities.Items.AddRange((ListViewItem[])cbItems.ToArray());
+                Text = entity.displayName,
+                Tag = entity.logicalName
+            }));
+
+            lvEntities.Items.AddRange(cbItems.ToArray());
         }
 
         private void tbFilter_Click(object sender, EventArgs e)
         {
-            if (tbFilter.Text == "Search in entities ...")
+            if (tbFilter.Text.ToLower() == "search in tables ...")
                 tbFilter.Text = "";
         }
 
@@ -406,7 +400,7 @@ namespace Carfup.XTBPlugins.ViewRenamer
 
         private void btnLoadViews_Click(object sender, EventArgs e)
         {
-            ExecuteMethod(GetViewsForSelectedEntity);
+            ExecuteMethod(GetViewsForSelectedEntities);
         }
 
         private void btnReplaceText_Click(object sender, EventArgs e)
@@ -414,9 +408,20 @@ namespace Carfup.XTBPlugins.ViewRenamer
             var from = tbReplaceFrom.Text;
             var to = tbReplaceTo.Text;
             var language = cbLanguageReplace.Text;
-            var type = rbRegexReplace.Checked ? "regex" : "text";
-            
+            var caseSensitive = chkCaseSensitive.Checked;
+            var crmViewsSelected = new List<CrmView>();
+            var crmViewsInProgress = new List<CrmView>();
+
+            if (rbSelectedLines.Checked && dgvViewsToRename.SelectedRows.Count > 0)
+            {
+                var selectedRows = dgvViewsToRename.SelectedRows;
+
+                foreach (DataGridViewRow s in selectedRows)
+                    crmViewsSelected.Add(crmViews.ElementAt(s.Index));
+            }
+
             var crmViewsReplace = new List<CrmView>();
+
             foreach(var view in crmViews.ToList())
             {
                 var found = false;
@@ -429,13 +434,19 @@ namespace Carfup.XTBPlugins.ViewRenamer
                     Type = view.Type
                 };
                 
-                
                 foreach (var name in view.Names)
                 {
                     var condition = language == "All" ? true : name.Key == Int32.Parse(language);
-                    if ((name.Value.Contains(from) || Regex.Matches(name.Value, from).Count > 0) && condition)
+                    var valueToReplace = caseSensitive ? name.Value : name.Value.ToLower();
+                    var fromCaseSensitive = caseSensitive ? from : from.ToLower();
+
+                    if ((valueToReplace.Contains(fromCaseSensitive) || Regex.Matches(name.Value, from).Count > 0) 
+                        && condition
+                        && ((crmViewsSelected.Count > 0 && crmViewsSelected.Contains(view)) || rbAllLines.Checked)
+                        )
                     {
-                        var replace = type == "text" ? name.Value.Replace(from, to) : Regex.Replace(name.Value, from, to);
+                        var reg = caseSensitive ? new Regex(from, RegexOptions.None) : new Regex(from, RegexOptions.IgnoreCase);
+                        var replace = reg.Replace(name.Value, to);
 
                         crmView.Names.Add(name.Key, replace);
                         found = true;
@@ -454,6 +465,8 @@ namespace Carfup.XTBPlugins.ViewRenamer
 
             crmViews = crmViewsReplace;
             FillDataGrid(crmViews);
+
+            tsbSaveViews.Enabled = crmViewsModified.Count > 0;
         }
 
         private void FillDataGrid(List<CrmView> list)
@@ -472,8 +485,8 @@ namespace Carfup.XTBPlugins.ViewRenamer
                 dataTable.Rows.Add(dataRow);
             }
 
-            for (int i = 0; i < dgvViewsToRename.Columns.Count; i++)
-                dgvViewsToRename.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+         //   for (int i = 0; i < dgvViewsToRename.Columns.Count; i++)
+         //       dgvViewsToRename.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
         }
 
         private void lvEntities_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
@@ -483,7 +496,7 @@ namespace Carfup.XTBPlugins.ViewRenamer
 
         private void lvEntities_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
-            btnLoadViews.Enabled = lvEntities.CheckedItems.Count > 0;
+            btnLoadViews.Enabled = lvEntities?.CheckedItems.Count > 0;
         }
 
         private void tbReplaceFrom_TextChanged(object sender, EventArgs e)
@@ -494,6 +507,21 @@ namespace Carfup.XTBPlugins.ViewRenamer
         private void tbReplaceTo_TextChanged(object sender, EventArgs e)
         {
             btnReplaceText.Enabled = !String.IsNullOrEmpty(tbReplaceFrom.Text) && !String.IsNullOrEmpty(tbReplaceTo.Text);
+        }
+
+        private void btnLoadEntities_Click(object sender, EventArgs e)
+        {
+            ExecuteMethod(LoadEntities);
+        }
+
+        private void rbSelectedLines_CheckedChanged(object sender, EventArgs e)
+        {
+            rbAllLines.Checked = !rbSelectedLines.Checked;
+        }
+
+        private void rbAllLines_CheckedChanged(object sender, EventArgs e)
+        {
+            rbSelectedLines.Checked = !rbAllLines.Checked;
         }
     }
 }

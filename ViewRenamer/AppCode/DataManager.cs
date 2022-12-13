@@ -2,11 +2,13 @@
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
+using Microsoft.Xrm.Sdk.Metadata.Query;
 using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,18 +30,45 @@ namespace Carfup.XTBPlugins.AppCode
 
         public List<EntityDetailledName> LoadEntities()
         {
-            RetrieveAllEntitiesRequest request = new RetrieveAllEntitiesRequest()
+            /*RetrieveAllEntitiesRequest request = new RetrieveAllEntitiesRequest()
             {
                 EntityFilters = EntityFilters.Entity,
                 RetrieveAsIfPublished = true
             };
 
             // Retrieve the MetaData.
-            RetrieveAllEntitiesResponse response = (RetrieveAllEntitiesResponse)this.service.Execute(request);
+            RetrieveAllEntitiesResponse response = (RetrieveAllEntitiesResponse)this.service.Execute(request);*/
+
+
+            EntityQueryExpression entityQueryExpression = new EntityQueryExpression
+            {
+                Criteria = new MetadataFilterExpression(LogicalOperator.Or),
+                Properties = new MetadataPropertiesExpression
+                {
+                    AllProperties = false,
+                    PropertyNames = { "DisplayName", "LogicalName", "ObjectTypeCode" }
+                }
+            };
+
+            RetrieveMetadataChangesRequest retrieveMetadataChangesRequest = new RetrieveMetadataChangesRequest
+            {
+                Query = entityQueryExpression,
+                ClientVersionStamp = null
+            };
+
+            RetrieveMetadataChangesResponse response = (RetrieveMetadataChangesResponse)service.Execute(retrieveMetadataChangesRequest);
+
 
             List<EntityDetailledName> edn = new List<EntityDetailledName>();
 
-            foreach (var entity in response.EntityMetadata)
+            edn = response.EntityMetadata.Where(x => x.DisplayName?.UserLocalizedLabel?.Label != null).Select(entity => new EntityDetailledName
+            {
+                displayName = entity.DisplayName?.UserLocalizedLabel?.Label,
+                logicalName = entity.LogicalName,
+                schemaName = entity.SchemaName
+            }).ToList();
+
+           /* foreach (var entity in response.EntityMetadata)
             {
                 if (entity.DisplayName?.UserLocalizedLabel?.Label == null)
                     continue;
@@ -50,7 +79,7 @@ namespace Carfup.XTBPlugins.AppCode
                     logicalName = entity.LogicalName,
                     schemaName = entity.SchemaName
                 });
-            }
+            }*/
 
             return edn;
         }
