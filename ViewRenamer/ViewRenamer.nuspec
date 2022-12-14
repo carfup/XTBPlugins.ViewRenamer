@@ -12,8 +12,9 @@
     <summary>Rename your views in few clicks.</summary>
     <releaseNotes>
 1.2022.12.1
-First version. 
-Loading the languages available in the environnement and rename yours views for each of them in few clicks.
+Loading all Tables.
+Loading views for the selected table(s).
+Replace the content using regex, selected language, all lines or selected ones.
     </releaseNotes>
     <copyright>Copyright 2022</copyright>
     <tags>XrmToolBox Plugin ViewRenamer</tags>

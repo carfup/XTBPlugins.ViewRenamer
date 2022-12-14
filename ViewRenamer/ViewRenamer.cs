@@ -410,7 +410,6 @@ namespace Carfup.XTBPlugins.ViewRenamer
             var language = cbLanguageReplace.Text;
             var caseSensitive = chkCaseSensitive.Checked;
             var crmViewsSelected = new List<CrmView>();
-            var crmViewsInProgress = new List<CrmView>();
 
             if (rbSelectedLines.Checked && dgvViewsToRename.SelectedRows.Count > 0)
             {
@@ -460,7 +459,7 @@ namespace Carfup.XTBPlugins.ViewRenamer
                 crmViewsReplace.Add(crmView);
 
                 if(found)
-                    crmViewsModified.Add(view);
+                    crmViewsModified.Add(crmView);
             }
 
             crmViews = crmViewsReplace;
@@ -522,6 +521,13 @@ namespace Carfup.XTBPlugins.ViewRenamer
         private void rbAllLines_CheckedChanged(object sender, EventArgs e)
         {
             rbSelectedLines.Checked = !rbAllLines.Checked;
+        }
+
+        private void btnRevertReplace_Click(object sender, EventArgs e)
+        {
+            var from = tbReplaceFrom.Text;
+            tbReplaceFrom.Text = tbReplaceTo.Text;
+            tbReplaceTo.Text = from;
         }
     }
 }

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ViewRenamer")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Carfup.XTBPlugins.ViewRenamer")]
+[assembly: AssemblyDescription("If you want to rename your views in several languages in few clicks, this is the tool you are looking for !")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ViewRenamer")]
+[assembly: AssemblyCompany("Clement Olivier")]
+[assembly: AssemblyProduct("Carfup.XTBPlugins.ViewRenamer")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
