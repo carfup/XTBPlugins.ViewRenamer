@@ -106,9 +106,9 @@ namespace Carfup.XTBPlugins.ViewRenamer
                 MessageBox.Show("you need to select table(s) in order to load the related views.", "No tables selected.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             foreach (ListViewItem entity in lvEntities.CheckedItems)
-                selectedItems.Add(entity.Text);
+                selectedItems.Add(entity.Tag.ToString());
                 
-            var entityCode = entities.Where(x => selectedItems.Contains(x.displayName)).Select(x => x.logicalName).ToArray();
+            var entityCode = entities.Where(x => selectedItems.Contains(x.logicalName)).Select(x => x.logicalName).ToArray();
             crmViews = new List<CrmView>();
             
 
