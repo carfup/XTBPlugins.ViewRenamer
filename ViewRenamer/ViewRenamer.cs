@@ -282,7 +282,7 @@ namespace Carfup.XTBPlugins.ViewRenamer
 
         private void tbFilter_TextChanged(object sender, EventArgs e)
         {
-            if (tbFilter.Text == "" || tbFilter.Text.Length < 3)
+            if (tbFilter.Text != "" && tbFilter.Text.Length < 3)
                 return; 
 
             lvEntities.Items.Clear();
