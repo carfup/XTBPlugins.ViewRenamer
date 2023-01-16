@@ -213,7 +213,6 @@
             this.lvEntities.Name = "lvEntities";
             this.lvEntities.ShowGroups = false;
             this.lvEntities.Size = new System.Drawing.Size(234, 534);
-            this.lvEntities.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvEntities.TabIndex = 11;
             this.lvEntities.UseCompatibleStateImageBehavior = false;
             this.lvEntities.View = System.Windows.Forms.View.Details;
@@ -233,7 +232,6 @@
             this.tbFilter.Name = "tbFilter";
             this.tbFilter.Size = new System.Drawing.Size(234, 20);
             this.tbFilter.TabIndex = 9;
-            this.tbFilter.Text = "Search in tables ...";
             this.tbFilter.Click += new System.EventHandler(this.tbFilter_Click);
             this.tbFilter.TextChanged += new System.EventHandler(this.tbFilter_TextChanged);
             // 
