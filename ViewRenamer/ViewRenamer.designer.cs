@@ -34,6 +34,8 @@
             this.tsbSaveViews = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsPublish = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.dgvViewsToRename = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -44,6 +46,9 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.btnLoadViews = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnRevertReplace = new System.Windows.Forms.Button();
+            this.rbSelectedLines = new System.Windows.Forms.RadioButton();
+            this.rbAllLines = new System.Windows.Forms.RadioButton();
             this.chkCaseSensitive = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbLanguageReplace = new System.Windows.Forms.ComboBox();
@@ -52,8 +57,6 @@
             this.tbReplaceTo = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbReplaceFrom = new System.Windows.Forms.TextBox();
-            this.rbAllLines = new System.Windows.Forms.RadioButton();
-            this.rbSelectedLines = new System.Windows.Forms.RadioButton();
             this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvViewsToRename)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -70,7 +73,9 @@
             this.tssSeparator1,
             this.tsbSaveViews,
             this.toolStripSeparator2,
-            this.tsPublish});
+            this.tsPublish,
+            this.toolStripSeparator1,
+            this.toolStripLabel1});
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
             this.toolStripMenu.Size = new System.Drawing.Size(1250, 31);
@@ -115,6 +120,19 @@
             this.tsPublish.Size = new System.Drawing.Size(121, 28);
             this.tsPublish.Text = "Publish changes";
             this.tsPublish.Click += new System.EventHandler(this.tsPublish_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.ForeColor = System.Drawing.Color.Red;
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(544, 28);
+            this.toolStripLabel1.Text = "<< In order to apply your changes, you need to Save and then Publish to make it v" +
+    "isible to your users !";
             // 
             // dgvViewsToRename
             // 
@@ -195,7 +213,6 @@
             this.lvEntities.Name = "lvEntities";
             this.lvEntities.ShowGroups = false;
             this.lvEntities.Size = new System.Drawing.Size(234, 534);
-            this.lvEntities.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvEntities.TabIndex = 11;
             this.lvEntities.UseCompatibleStateImageBehavior = false;
             this.lvEntities.View = System.Windows.Forms.View.Details;
@@ -215,7 +232,6 @@
             this.tbFilter.Name = "tbFilter";
             this.tbFilter.Size = new System.Drawing.Size(234, 20);
             this.tbFilter.TabIndex = 9;
-            this.tbFilter.Text = "Search in tables ...";
             this.tbFilter.Click += new System.EventHandler(this.tbFilter_Click);
             this.tbFilter.TextChanged += new System.EventHandler(this.tbFilter_TextChanged);
             // 
@@ -224,7 +240,7 @@
             this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.Control;
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 621F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 795F));
             this.tableLayoutPanel2.Controls.Add(this.btnLoadViews, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.groupBox1, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -253,6 +269,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnRevertReplace);
             this.groupBox1.Controls.Add(this.rbSelectedLines);
             this.groupBox1.Controls.Add(this.rbAllLines);
             this.groupBox1.Controls.Add(this.chkCaseSensitive);
@@ -270,12 +287,46 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Replace";
             // 
+            // btnRevertReplace
+            // 
+            this.btnRevertReplace.Image = global::Carfup.XTBPlugins.Properties.Resources.revert;
+            this.btnRevertReplace.Location = new System.Drawing.Point(330, 21);
+            this.btnRevertReplace.Name = "btnRevertReplace";
+            this.btnRevertReplace.Size = new System.Drawing.Size(24, 45);
+            this.btnRevertReplace.TabIndex = 15;
+            this.btnRevertReplace.UseVisualStyleBackColor = true;
+            this.btnRevertReplace.Click += new System.EventHandler(this.btnRevertReplace_Click);
+            // 
+            // rbSelectedLines
+            // 
+            this.rbSelectedLines.AutoSize = true;
+            this.rbSelectedLines.Location = new System.Drawing.Point(524, 45);
+            this.rbSelectedLines.Name = "rbSelectedLines";
+            this.rbSelectedLines.Size = new System.Drawing.Size(91, 17);
+            this.rbSelectedLines.TabIndex = 14;
+            this.rbSelectedLines.Text = "Selected lines";
+            this.rbSelectedLines.UseVisualStyleBackColor = true;
+            this.rbSelectedLines.CheckedChanged += new System.EventHandler(this.rbSelectedLines_CheckedChanged);
+            // 
+            // rbAllLines
+            // 
+            this.rbAllLines.AutoSize = true;
+            this.rbAllLines.Checked = true;
+            this.rbAllLines.Location = new System.Drawing.Point(524, 22);
+            this.rbAllLines.Name = "rbAllLines";
+            this.rbAllLines.Size = new System.Drawing.Size(60, 17);
+            this.rbAllLines.TabIndex = 13;
+            this.rbAllLines.TabStop = true;
+            this.rbAllLines.Text = "All lines";
+            this.rbAllLines.UseVisualStyleBackColor = true;
+            this.rbAllLines.CheckedChanged += new System.EventHandler(this.rbAllLines_CheckedChanged);
+            // 
             // chkCaseSensitive
             // 
             this.chkCaseSensitive.AutoSize = true;
             this.chkCaseSensitive.Checked = true;
             this.chkCaseSensitive.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkCaseSensitive.Location = new System.Drawing.Point(350, 23);
+            this.chkCaseSensitive.Location = new System.Drawing.Point(368, 23);
             this.chkCaseSensitive.Name = "chkCaseSensitive";
             this.chkCaseSensitive.Size = new System.Drawing.Size(96, 17);
             this.chkCaseSensitive.TabIndex = 12;
@@ -285,7 +336,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(347, 47);
+            this.label3.Location = new System.Drawing.Point(365, 47);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(61, 13);
             this.label3.TabIndex = 9;
@@ -296,7 +347,7 @@
             this.cbLanguageReplace.FormattingEnabled = true;
             this.cbLanguageReplace.Items.AddRange(new object[] {
             "All"});
-            this.cbLanguageReplace.Location = new System.Drawing.Point(410, 43);
+            this.cbLanguageReplace.Location = new System.Drawing.Point(428, 43);
             this.cbLanguageReplace.Name = "cbLanguageReplace";
             this.cbLanguageReplace.Size = new System.Drawing.Size(83, 21);
             this.cbLanguageReplace.TabIndex = 8;
@@ -306,7 +357,7 @@
             this.btnReplaceText.Enabled = false;
             this.btnReplaceText.Image = global::Carfup.XTBPlugins.Properties.Resources.find;
             this.btnReplaceText.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnReplaceText.Location = new System.Drawing.Point(621, 13);
+            this.btnReplaceText.Location = new System.Drawing.Point(622, 13);
             this.btnReplaceText.Name = "btnReplaceText";
             this.btnReplaceText.Size = new System.Drawing.Size(162, 51);
             this.btnReplaceText.TabIndex = 7;
@@ -327,7 +378,7 @@
             // 
             this.tbReplaceTo.Location = new System.Drawing.Point(49, 46);
             this.tbReplaceTo.Name = "tbReplaceTo";
-            this.tbReplaceTo.Size = new System.Drawing.Size(290, 20);
+            this.tbReplaceTo.Size = new System.Drawing.Size(272, 20);
             this.tbReplaceTo.TabIndex = 5;
             this.tbReplaceTo.TextChanged += new System.EventHandler(this.tbReplaceTo_TextChanged);
             // 
@@ -344,33 +395,9 @@
             // 
             this.tbReplaceFrom.Location = new System.Drawing.Point(49, 20);
             this.tbReplaceFrom.Name = "tbReplaceFrom";
-            this.tbReplaceFrom.Size = new System.Drawing.Size(290, 20);
+            this.tbReplaceFrom.Size = new System.Drawing.Size(272, 20);
             this.tbReplaceFrom.TabIndex = 3;
             this.tbReplaceFrom.TextChanged += new System.EventHandler(this.tbReplaceFrom_TextChanged);
-            // 
-            // rbAllLines
-            // 
-            this.rbAllLines.AutoSize = true;
-            this.rbAllLines.Checked = true;
-            this.rbAllLines.Location = new System.Drawing.Point(514, 22);
-            this.rbAllLines.Name = "rbAllLines";
-            this.rbAllLines.Size = new System.Drawing.Size(60, 17);
-            this.rbAllLines.TabIndex = 13;
-            this.rbAllLines.TabStop = true;
-            this.rbAllLines.Text = "All lines";
-            this.rbAllLines.UseVisualStyleBackColor = true;
-            this.rbAllLines.CheckedChanged += new System.EventHandler(this.rbAllLines_CheckedChanged);
-            // 
-            // rbSelectedLines
-            // 
-            this.rbSelectedLines.AutoSize = true;
-            this.rbSelectedLines.Location = new System.Drawing.Point(514, 45);
-            this.rbSelectedLines.Name = "rbSelectedLines";
-            this.rbSelectedLines.Size = new System.Drawing.Size(91, 17);
-            this.rbSelectedLines.TabIndex = 14;
-            this.rbSelectedLines.Text = "Selected lines";
-            this.rbSelectedLines.UseVisualStyleBackColor = true;
-            this.rbSelectedLines.CheckedChanged += new System.EventHandler(this.rbSelectedLines_CheckedChanged);
             // 
             // ViewRenamer
             // 
@@ -422,5 +449,8 @@
         private System.Windows.Forms.CheckBox chkCaseSensitive;
         private System.Windows.Forms.RadioButton rbSelectedLines;
         private System.Windows.Forms.RadioButton rbAllLines;
+        private System.Windows.Forms.Button btnRevertReplace;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
     }
 }
