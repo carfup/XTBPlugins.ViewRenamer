@@ -1,7 +1,7 @@
 ﻿<package>
   <metadata>
     <id>Carfup.XTBPlugins.ViewRenamer</id>
-    <version>1.2022.12.1</version>
+    <version>1.2023.1.2</version>
     <title>View Renamer</title>
     <authors>Clement Olivier</authors>
     <owners>Clement Olivier</owners>
@@ -11,6 +11,11 @@
     <description>If you want to rename your views in several languages in few clicks, this is the tool you are looking for !</description>
     <summary>Rename your views in few clicks.</summary>
     <releaseNotes>
+1.2023.1.2
+Fix the search in tables
+Fix the view loading for the correct table while 2 tables had the same display name
+Improve speed (a bit) while loading the tables
+
 1.2022.12.1
 Loading all Tables.
 Loading views for the selected table(s).

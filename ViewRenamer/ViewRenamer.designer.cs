@@ -29,34 +29,34 @@
         private void InitializeComponent()
         {
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
+            this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.tssSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbSaveViews = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsPublish = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.dgvViewsToRename = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnLoadEntities = new System.Windows.Forms.Button();
             this.lvEntities = new System.Windows.Forms.ListView();
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tbFilter = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnLoadViews = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnRevertReplace = new System.Windows.Forms.Button();
             this.rbSelectedLines = new System.Windows.Forms.RadioButton();
             this.rbAllLines = new System.Windows.Forms.RadioButton();
             this.chkCaseSensitive = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbLanguageReplace = new System.Windows.Forms.ComboBox();
+            this.btnReplaceText = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.tbReplaceTo = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbReplaceFrom = new System.Windows.Forms.TextBox();
-            this.btnLoadEntities = new System.Windows.Forms.Button();
-            this.btnLoadViews = new System.Windows.Forms.Button();
-            this.btnRevertReplace = new System.Windows.Forms.Button();
-            this.btnReplaceText = new System.Windows.Forms.Button();
-            this.tsbClose = new System.Windows.Forms.ToolStripButton();
-            this.tsbSaveViews = new System.Windows.Forms.ToolStripButton();
-            this.tsPublish = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvViewsToRename)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -82,15 +82,57 @@
             this.toolStripMenu.TabIndex = 4;
             this.toolStripMenu.Text = "toolStrip1";
             // 
+            // tsbClose
+            // 
+            this.tsbClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbClose.Image = global::Carfup.XTBPlugins.Properties.Resources.close;
+            this.tsbClose.Name = "tsbClose";
+            this.tsbClose.Size = new System.Drawing.Size(28, 28);
+            this.tsbClose.Text = "Close this tool";
+            this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
+            // 
             // tssSeparator1
             // 
             this.tssSeparator1.Name = "tssSeparator1";
             this.tssSeparator1.Size = new System.Drawing.Size(6, 31);
             // 
+            // tsbSaveViews
+            // 
+            this.tsbSaveViews.Enabled = false;
+            this.tsbSaveViews.Image = global::Carfup.XTBPlugins.Properties.Resources.save;
+            this.tsbSaveViews.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbSaveViews.Name = "tsbSaveViews";
+            this.tsbSaveViews.Size = new System.Drawing.Size(59, 28);
+            this.tsbSaveViews.Text = "Save";
+            this.tsbSaveViews.Click += new System.EventHandler(this.tsbSaveViews_Click);
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 31);
+            // 
+            // tsPublish
+            // 
+            this.tsPublish.Enabled = false;
+            this.tsPublish.Image = global::Carfup.XTBPlugins.Properties.Resources.rocket;
+            this.tsPublish.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsPublish.Name = "tsPublish";
+            this.tsPublish.Size = new System.Drawing.Size(121, 28);
+            this.tsPublish.Text = "Publish changes";
+            this.tsPublish.Click += new System.EventHandler(this.tsPublish_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.ForeColor = System.Drawing.Color.Red;
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(544, 28);
+            this.toolStripLabel1.Text = "<< In order to apply your changes, you need to Save and then Publish to make it v" +
+    "isible to your users !";
             // 
             // dgvViewsToRename
             // 
@@ -145,6 +187,19 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(240, 617);
             this.tableLayoutPanel3.TabIndex = 13;
             // 
+            // btnLoadEntities
+            // 
+            this.btnLoadEntities.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLoadEntities.Image = global::Carfup.XTBPlugins.Properties.Resources.load;
+            this.btnLoadEntities.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLoadEntities.Location = new System.Drawing.Point(3, 3);
+            this.btnLoadEntities.Name = "btnLoadEntities";
+            this.btnLoadEntities.Size = new System.Drawing.Size(234, 44);
+            this.btnLoadEntities.TabIndex = 13;
+            this.btnLoadEntities.Text = "Load all Tables";
+            this.btnLoadEntities.UseVisualStyleBackColor = true;
+            this.btnLoadEntities.Click += new System.EventHandler(this.btnLoadEntities_Click);
+            // 
             // lvEntities
             // 
             this.lvEntities.CheckBoxes = true;
@@ -158,7 +213,6 @@
             this.lvEntities.Name = "lvEntities";
             this.lvEntities.ShowGroups = false;
             this.lvEntities.Size = new System.Drawing.Size(234, 534);
-            this.lvEntities.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvEntities.TabIndex = 11;
             this.lvEntities.UseCompatibleStateImageBehavior = false;
             this.lvEntities.View = System.Windows.Forms.View.Details;
@@ -178,7 +232,6 @@
             this.tbFilter.Name = "tbFilter";
             this.tbFilter.Size = new System.Drawing.Size(234, 20);
             this.tbFilter.TabIndex = 9;
-            this.tbFilter.Text = "Search in tables ...";
             this.tbFilter.Click += new System.EventHandler(this.tbFilter_Click);
             this.tbFilter.TextChanged += new System.EventHandler(this.tbFilter_TextChanged);
             // 
@@ -200,6 +253,20 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(995, 78);
             this.tableLayoutPanel2.TabIndex = 11;
             // 
+            // btnLoadViews
+            // 
+            this.btnLoadViews.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLoadViews.Enabled = false;
+            this.btnLoadViews.Image = global::Carfup.XTBPlugins.Properties.Resources.load;
+            this.btnLoadViews.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLoadViews.Location = new System.Drawing.Point(3, 3);
+            this.btnLoadViews.Name = "btnLoadViews";
+            this.btnLoadViews.Size = new System.Drawing.Size(194, 72);
+            this.btnLoadViews.TabIndex = 0;
+            this.btnLoadViews.Text = "Load tables views";
+            this.btnLoadViews.UseVisualStyleBackColor = true;
+            this.btnLoadViews.Click += new System.EventHandler(this.btnLoadViews_Click);
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.btnRevertReplace);
@@ -219,6 +286,16 @@
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Replace";
+            // 
+            // btnRevertReplace
+            // 
+            this.btnRevertReplace.Image = global::Carfup.XTBPlugins.Properties.Resources.revert;
+            this.btnRevertReplace.Location = new System.Drawing.Point(330, 21);
+            this.btnRevertReplace.Name = "btnRevertReplace";
+            this.btnRevertReplace.Size = new System.Drawing.Size(24, 45);
+            this.btnRevertReplace.TabIndex = 15;
+            this.btnRevertReplace.UseVisualStyleBackColor = true;
+            this.btnRevertReplace.Click += new System.EventHandler(this.btnRevertReplace_Click);
             // 
             // rbSelectedLines
             // 
@@ -275,6 +352,19 @@
             this.cbLanguageReplace.Size = new System.Drawing.Size(83, 21);
             this.cbLanguageReplace.TabIndex = 8;
             // 
+            // btnReplaceText
+            // 
+            this.btnReplaceText.Enabled = false;
+            this.btnReplaceText.Image = global::Carfup.XTBPlugins.Properties.Resources.find;
+            this.btnReplaceText.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnReplaceText.Location = new System.Drawing.Point(622, 13);
+            this.btnReplaceText.Name = "btnReplaceText";
+            this.btnReplaceText.Size = new System.Drawing.Size(162, 51);
+            this.btnReplaceText.TabIndex = 7;
+            this.btnReplaceText.Text = "Replace";
+            this.btnReplaceText.UseVisualStyleBackColor = true;
+            this.btnReplaceText.Click += new System.EventHandler(this.btnReplaceText_Click);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -308,98 +398,6 @@
             this.tbReplaceFrom.Size = new System.Drawing.Size(272, 20);
             this.tbReplaceFrom.TabIndex = 3;
             this.tbReplaceFrom.TextChanged += new System.EventHandler(this.tbReplaceFrom_TextChanged);
-            // 
-            // btnLoadEntities
-            // 
-            this.btnLoadEntities.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnLoadEntities.Image = global::Carfup.XTBPlugins.Properties.Resources.load;
-            this.btnLoadEntities.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLoadEntities.Location = new System.Drawing.Point(3, 3);
-            this.btnLoadEntities.Name = "btnLoadEntities";
-            this.btnLoadEntities.Size = new System.Drawing.Size(234, 44);
-            this.btnLoadEntities.TabIndex = 13;
-            this.btnLoadEntities.Text = "Load all Tables";
-            this.btnLoadEntities.UseVisualStyleBackColor = true;
-            this.btnLoadEntities.Click += new System.EventHandler(this.btnLoadEntities_Click);
-            // 
-            // btnLoadViews
-            // 
-            this.btnLoadViews.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnLoadViews.Enabled = false;
-            this.btnLoadViews.Image = global::Carfup.XTBPlugins.Properties.Resources.load;
-            this.btnLoadViews.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLoadViews.Location = new System.Drawing.Point(3, 3);
-            this.btnLoadViews.Name = "btnLoadViews";
-            this.btnLoadViews.Size = new System.Drawing.Size(194, 72);
-            this.btnLoadViews.TabIndex = 0;
-            this.btnLoadViews.Text = "Load tables views";
-            this.btnLoadViews.UseVisualStyleBackColor = true;
-            this.btnLoadViews.Click += new System.EventHandler(this.btnLoadViews_Click);
-            // 
-            // btnRevertReplace
-            // 
-            this.btnRevertReplace.Image = global::Carfup.XTBPlugins.Properties.Resources.revert;
-            this.btnRevertReplace.Location = new System.Drawing.Point(330, 21);
-            this.btnRevertReplace.Name = "btnRevertReplace";
-            this.btnRevertReplace.Size = new System.Drawing.Size(24, 45);
-            this.btnRevertReplace.TabIndex = 15;
-            this.btnRevertReplace.UseVisualStyleBackColor = true;
-            this.btnRevertReplace.Click += new System.EventHandler(this.btnRevertReplace_Click);
-            // 
-            // btnReplaceText
-            // 
-            this.btnReplaceText.Enabled = false;
-            this.btnReplaceText.Image = global::Carfup.XTBPlugins.Properties.Resources.find;
-            this.btnReplaceText.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnReplaceText.Location = new System.Drawing.Point(622, 13);
-            this.btnReplaceText.Name = "btnReplaceText";
-            this.btnReplaceText.Size = new System.Drawing.Size(162, 51);
-            this.btnReplaceText.TabIndex = 7;
-            this.btnReplaceText.Text = "Replace";
-            this.btnReplaceText.UseVisualStyleBackColor = true;
-            this.btnReplaceText.Click += new System.EventHandler(this.btnReplaceText_Click);
-            // 
-            // tsbClose
-            // 
-            this.tsbClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbClose.Image = global::Carfup.XTBPlugins.Properties.Resources.close;
-            this.tsbClose.Name = "tsbClose";
-            this.tsbClose.Size = new System.Drawing.Size(28, 28);
-            this.tsbClose.Text = "Close this tool";
-            this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
-            // 
-            // tsbSaveViews
-            // 
-            this.tsbSaveViews.Enabled = false;
-            this.tsbSaveViews.Image = global::Carfup.XTBPlugins.Properties.Resources.save;
-            this.tsbSaveViews.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbSaveViews.Name = "tsbSaveViews";
-            this.tsbSaveViews.Size = new System.Drawing.Size(59, 28);
-            this.tsbSaveViews.Text = "Save";
-            this.tsbSaveViews.Click += new System.EventHandler(this.tsbSaveViews_Click);
-            // 
-            // tsPublish
-            // 
-            this.tsPublish.Enabled = false;
-            this.tsPublish.Image = global::Carfup.XTBPlugins.Properties.Resources.rocket;
-            this.tsPublish.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsPublish.Name = "tsPublish";
-            this.tsPublish.Size = new System.Drawing.Size(121, 28);
-            this.tsPublish.Text = "Publish changes";
-            this.tsPublish.Click += new System.EventHandler(this.tsPublish_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.ForeColor = System.Drawing.Color.Red;
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(544, 28);
-            this.toolStripLabel1.Text = "<< In order to apply your changes, you need to Save and then Publish to make it v" +
-    "isible to your users !";
             // 
             // ViewRenamer
             // 

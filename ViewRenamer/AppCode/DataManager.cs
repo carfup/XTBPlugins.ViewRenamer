@@ -81,7 +81,7 @@ namespace Carfup.XTBPlugins.AppCode
                 });
             }*/
 
-            return edn;
+            return edn.OrderBy(x => x.displayName).ToList();
         }
 
         public List<Entity> RetrieveViews(string[] objectTypeCode)

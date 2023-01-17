@@ -106,9 +106,9 @@ namespace Carfup.XTBPlugins.ViewRenamer
                 MessageBox.Show("you need to select table(s) in order to load the related views.", "No tables selected.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             foreach (ListViewItem entity in lvEntities.CheckedItems)
-                selectedItems.Add(entity.Text);
+                selectedItems.Add(entity.Tag.ToString());
                 
-            var entityCode = entities.Where(x => selectedItems.Contains(x.displayName)).Select(x => x.logicalName).ToArray();
+            var entityCode = entities.Where(x => selectedItems.Contains(x.logicalName)).Select(x => x.logicalName).ToArray();
             crmViews = new List<CrmView>();
             
 
@@ -193,14 +193,16 @@ namespace Carfup.XTBPlugins.ViewRenamer
                         log.LogData(EventType.Exception, LogAction.LoadEntities, args.Error);
                     }
 
-                    List<ListViewItem> cbItems = new List<ListViewItem>();
-                    cbItems.AddRange(entities.Select(entity => new ListViewItem()
+                    lvEntities.BeginUpdate();
+                    foreach(var entity in entities)
                     {
-                        Text = entity.displayName,
-                        Tag = entity.logicalName
-                    }));
-                 
-                    lvEntities.Items.AddRange(cbItems.ToArray());
+                        lvEntities.Items.Add(new ListViewItem()
+                        {
+                            Text = entity.displayName,
+                            Tag = entity.logicalName
+                        });
+                    }
+                    lvEntities.EndUpdate(); 
 
                     foreach (var language in languages.OrderBy(x => x))
                     {
@@ -282,26 +284,28 @@ namespace Carfup.XTBPlugins.ViewRenamer
 
         private void tbFilter_TextChanged(object sender, EventArgs e)
         {
-            if (tbFilter.Text == "" || tbFilter.Text.Length < 3)
+            if (tbFilter.Text != "" && tbFilter.Text.Length < 3)
                 return; 
 
             lvEntities.Items.Clear();
             var newList = entities.Where(x => x.displayName.ToLower().Contains(tbFilter.Text.ToLower()));
 
-            List<ListViewItem> cbItems = new List<ListViewItem>();
-            cbItems.AddRange(newList.Select(entity => new ListViewItem()
+            lvEntities.BeginUpdate();
+            foreach (var entity in newList)
             {
-                Text = entity.displayName,
-                Tag = entity.logicalName
-            }));
-
-            lvEntities.Items.AddRange(cbItems.ToArray());
+                lvEntities.Items.Add(new ListViewItem()
+                {
+                    Text = entity.displayName,
+                    Tag = entity.logicalName
+                });
+            }
+            lvEntities.EndUpdate();
         }
 
         private void tbFilter_Click(object sender, EventArgs e)
         {
-            if (tbFilter.Text.ToLower() == "search in tables ...")
-                tbFilter.Text = "";
+           /* if (tbFilter.Text.ToLower() == "search in tables ...")
+                tbFilter.Text = "";*/
         }
 
         private void SortListView(ListView listView, int columnIndex, SortOrder? sort = null)
