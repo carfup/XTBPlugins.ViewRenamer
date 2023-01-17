@@ -193,16 +193,16 @@ namespace Carfup.XTBPlugins.ViewRenamer
                         log.LogData(EventType.Exception, LogAction.LoadEntities, args.Error);
                     }
 
-                    lvEntities.BeginUpdate();
-                    foreach(var entity in entities)
+                    lvEntities.ItemChecked -= lvEntities_ItemChecked;
+                    List<ListViewItem> cbItems = new List<ListViewItem>();
+                    cbItems.AddRange(entities.Select(entity => new ListViewItem()
                     {
-                        lvEntities.Items.Add(new ListViewItem()
-                        {
-                            Text = entity.displayName,
-                            Tag = entity.logicalName
-                        });
-                    }
-                    lvEntities.EndUpdate(); 
+                        Text = entity.displayName,
+                        Tag = entity.logicalName
+                    }));
+
+                    lvEntities.Items.AddRange(cbItems.ToArray());
+                    lvEntities.ItemChecked += lvEntities_ItemChecked;
 
                     foreach (var language in languages.OrderBy(x => x))
                     {
@@ -284,28 +284,28 @@ namespace Carfup.XTBPlugins.ViewRenamer
 
         private void tbFilter_TextChanged(object sender, EventArgs e)
         {
-            if (tbFilter.Text != "" && tbFilter.Text.Length < 3)
+            if (tbFilter.Text == "" )
                 return; 
 
             lvEntities.Items.Clear();
             var newList = entities.Where(x => x.displayName.ToLower().Contains(tbFilter.Text.ToLower()));
 
-            lvEntities.BeginUpdate();
-            foreach (var entity in newList)
+            lvEntities.ItemChecked -= lvEntities_ItemChecked;
+            List<ListViewItem> cbItems = new List<ListViewItem>();
+            cbItems.AddRange(newList.Select(entity => new ListViewItem()
             {
-                lvEntities.Items.Add(new ListViewItem()
-                {
-                    Text = entity.displayName,
-                    Tag = entity.logicalName
-                });
-            }
-            lvEntities.EndUpdate();
+                Text = entity.displayName,
+                Tag = entity.logicalName
+            }).ToArray());
+
+            lvEntities.Items.AddRange(cbItems.ToArray());
+            lvEntities.ItemChecked += lvEntities_ItemChecked;
         }
 
         private void tbFilter_Click(object sender, EventArgs e)
         {
-           /* if (tbFilter.Text.ToLower() == "search in tables ...")
-                tbFilter.Text = "";*/
+            if (tbFilter.Text.ToLower() == "search in tables ...")
+                tbFilter.Text = "";
         }
 
         private void SortListView(ListView listView, int columnIndex, SortOrder? sort = null)
