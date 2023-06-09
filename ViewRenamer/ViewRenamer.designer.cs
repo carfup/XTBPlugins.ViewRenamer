@@ -34,8 +34,10 @@
             this.tsbSaveViews = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsPublish = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbSavePublish = new System.Windows.Forms.ToolStripButton();
             this.dgvViewsToRename = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -74,8 +76,10 @@
             this.tsbSaveViews,
             this.toolStripSeparator2,
             this.tsPublish,
+            this.toolStripSeparator3,
+            this.toolStripLabel1,
             this.toolStripSeparator1,
-            this.toolStripLabel1});
+            this.tsbSavePublish});
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
             this.toolStripMenu.Size = new System.Drawing.Size(1250, 31);
@@ -114,25 +118,40 @@
             // tsPublish
             // 
             this.tsPublish.Enabled = false;
-            this.tsPublish.Image = global::Carfup.XTBPlugins.Properties.Resources.rocket;
+            this.tsPublish.Image = global::Carfup.XTBPlugins.Properties.Resources.paper_plane;
             this.tsPublish.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsPublish.Name = "tsPublish";
             this.tsPublish.Size = new System.Drawing.Size(121, 28);
             this.tsPublish.Text = "Publish changes";
             this.tsPublish.Click += new System.EventHandler(this.tsPublish_Click);
             // 
-            // toolStripSeparator1
+            // toolStripSeparator3
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 31);
             // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.ForeColor = System.Drawing.Color.Red;
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(544, 28);
+            this.toolStripLabel1.Size = new System.Drawing.Size(671, 28);
             this.toolStripLabel1.Text = "<< In order to apply your changes, you need to Save and then Publish to make it v" +
-    "isible to your users !";
+    "isible to your users ! Or Save and Publish >>";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            // 
+            // tsbSavePublish
+            // 
+            this.tsbSavePublish.Enabled = false;
+            this.tsbSavePublish.Image = global::Carfup.XTBPlugins.Properties.Resources.rocket;
+            this.tsbSavePublish.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbSavePublish.Name = "tsbSavePublish";
+            this.tsbSavePublish.Size = new System.Drawing.Size(124, 28);
+            this.tsbSavePublish.Text = "Save and Publish";
+            this.tsbSavePublish.Click += new System.EventHandler(this.tsbSavePublish_Click);
             // 
             // dgvViewsToRename
             // 
@@ -223,7 +242,7 @@
             // columnHeader12
             // 
             this.columnHeader12.Text = "Tables";
-            this.columnHeader12.Width = 200;
+            this.columnHeader12.Width = 300;
             // 
             // tbFilter
             // 
@@ -453,5 +472,7 @@
         private System.Windows.Forms.Button btnRevertReplace;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton tsbSavePublish;
     }
 }
