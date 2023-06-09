@@ -291,7 +291,7 @@ namespace Carfup.XTBPlugins.ViewRenamer
 
         private void tbFilter_TextChanged(object sender, EventArgs e)
         {
-            if (tbFilter.Text != "" && tbFilter.Text.Length < 3)
+            if (tbFilter.Text == "" )
                 return; 
 
             lvEntities.Items.Clear();
@@ -311,8 +311,8 @@ namespace Carfup.XTBPlugins.ViewRenamer
 
         private void tbFilter_Click(object sender, EventArgs e)
         {
-           /* if (tbFilter.Text.ToLower() == "search in tables ...")
-                tbFilter.Text = "";*/
+            if (tbFilter.Text.ToLower() == "search in tables ...")
+                tbFilter.Text = "";
         }
 
         private void SortListView(ListView listView, int columnIndex, SortOrder? sort = null)
