@@ -46,7 +46,7 @@ namespace Carfup.XTBPlugins.AppCode
                 Properties = new MetadataPropertiesExpression
                 {
                     AllProperties = false,
-                    PropertyNames = { "DisplayName", "LogicalName", "ObjectTypeCode" }
+                    PropertyNames = { "DisplayName", "LogicalName", "ObjectTypeCode", "SchemaName" }
                 }
             };
 
