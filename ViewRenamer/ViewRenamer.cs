@@ -250,7 +250,7 @@ namespace Carfup.XTBPlugins.ViewRenamer
                 Message = "Saving the modified views...",
                 Work = (worker, args) =>
                 {
-                    foreach (var modifiedView in crmViewsModified)
+                    foreach (var modifiedView in crmViewsModified.ToList())
                     {
                         var labels = new List<LocalizedLabel>();
                         foreach (var l in languages)
@@ -280,7 +280,7 @@ namespace Carfup.XTBPlugins.ViewRenamer
 
                     crmViewsModified.Clear();
 
-                    if(!publishandsave)
+                    if (!publishandsave)
                         MessageBox.Show("The modified view names were proceed successfully`\n\rYou need to publish in order to apply the changes and view these.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     tsPublish.Enabled = true;
