@@ -543,7 +543,9 @@ namespace Carfup.XTBPlugins.ViewRenamer
 
         private void btnRevertReplace_Click(object sender, EventArgs e)
         {
-            (tbReplaceFrom.Text, tbReplaceTo.Text) = (tbReplaceTo.Text, tbReplaceFrom.Text);
+            var from = tbReplaceFrom.Text;
+            tbReplaceFrom.Text = tbReplaceTo.Text;
+            tbReplaceTo.Text = from;
         }
 
         private void tsbSavePublish_Click(object sender, EventArgs e)
