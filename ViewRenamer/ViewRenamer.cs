@@ -193,16 +193,16 @@ namespace Carfup.XTBPlugins.ViewRenamer
                         log.LogData(EventType.Exception, LogAction.LoadEntities, args.Error);
                     }
 
-                    lvEntities.BeginUpdate();
-                    foreach(var entity in entities)
+                    lvEntities.ItemChecked -= lvEntities_ItemChecked;
+                    List<ListViewItem> cbItems = new List<ListViewItem>();
+                    cbItems.AddRange(entities.Select(entity => new ListViewItem()
                     {
-                        lvEntities.Items.Add(new ListViewItem()
-                        {
-                            Text = entity.displayName,
-                            Tag = entity.logicalName
-                        });
-                    }
-                    lvEntities.EndUpdate(); 
+                        Text = $"{entity.displayName} ({entity.logicalName})",
+                        Tag = entity.logicalName
+                    }));
+
+                    lvEntities.Items.AddRange(cbItems.ToArray());
+                    lvEntities.ItemChecked += lvEntities_ItemChecked;
 
                     foreach (var language in languages.OrderBy(x => x))
                     {
@@ -232,11 +232,17 @@ namespace Carfup.XTBPlugins.ViewRenamer
             crmViewsModified.Add(crmViews[e.RowIndex]);
 
             tsbSaveViews.Enabled = true;
+            tsbSavePublish.Enabled = true;
         }
 
         private void tsbSaveViews_Click(object sender, EventArgs e)
         {
-            if(crmViewsModified.Count == 0)
+            ExecuteMethod(SaveViews, false);
+        }
+
+        private void SaveViews(bool publishandsave = false)
+        {
+            if (crmViewsModified.Count == 0)
                 MessageBox.Show("The are no modified views !", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             WorkAsync(new WorkAsyncInfo
@@ -262,7 +268,7 @@ namespace Carfup.XTBPlugins.ViewRenamer
                         };
 
                         var response = (SetLocLabelsResponse)Service.Execute(request);
-                    } 
+                    }
                 },
                 PostWorkCallBack = (args) =>
                 {
@@ -274,7 +280,8 @@ namespace Carfup.XTBPlugins.ViewRenamer
 
                     crmViewsModified.Clear();
 
-                    MessageBox.Show("The modified view names were proceed successfully`\n\rYou need to publish in order to apply the changes and view these.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if(!publishandsave)
+                        MessageBox.Show("The modified view names were proceed successfully`\n\rYou need to publish in order to apply the changes and view these.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     tsPublish.Enabled = true;
                     log.LogData(EventType.Event, LogAction.SaveViews);
@@ -288,18 +295,18 @@ namespace Carfup.XTBPlugins.ViewRenamer
                 return; 
 
             lvEntities.Items.Clear();
-            var newList = entities.Where(x => x.displayName.ToLower().Contains(tbFilter.Text.ToLower()));
+            var newList = entities.Where(x => x.displayName.ToLower().Contains(tbFilter.Text.ToLower()) || x.logicalName.ToLower().Contains(tbFilter.Text.ToLower()));
 
-            lvEntities.BeginUpdate();
-            foreach (var entity in newList)
+            lvEntities.ItemChecked -= lvEntities_ItemChecked;
+            List<ListViewItem> cbItems = new List<ListViewItem>();
+            cbItems.AddRange(newList.Select(entity => new ListViewItem()
             {
-                lvEntities.Items.Add(new ListViewItem()
-                {
-                    Text = entity.displayName,
-                    Tag = entity.logicalName
-                });
-            }
-            lvEntities.EndUpdate();
+                Text = $"{entity.displayName} ({entity.logicalName})",
+                Tag = entity.logicalName
+            }));
+
+            lvEntities.Items.AddRange(cbItems.ToArray());
+            lvEntities.ItemChecked += lvEntities_ItemChecked;
         }
 
         private void tbFilter_Click(object sender, EventArgs e)
@@ -334,6 +341,11 @@ namespace Carfup.XTBPlugins.ViewRenamer
 
         private void tsPublish_Click(object sender, EventArgs e)
         {
+            ExecuteMethod(PublishChanges);
+        }
+
+        private void PublishChanges()
+        {
             WorkAsync(new WorkAsyncInfo
             {
                 Message = "Publishing the customizations...",
@@ -353,6 +365,7 @@ namespace Carfup.XTBPlugins.ViewRenamer
 
                     MessageBox.Show("Publish is finished you can now see the updates in your organization.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     tsbSaveViews.Enabled = false;
+                    tsbSavePublish.Enabled = false;
                     log.LogData(EventType.Event, LogAction.PublishCustomizations);
                 }
             });
@@ -470,6 +483,7 @@ namespace Carfup.XTBPlugins.ViewRenamer
             FillDataGrid(crmViews);
 
             tsbSaveViews.Enabled = crmViewsModified.Count > 0;
+            tsbSavePublish.Enabled = crmViewsModified.Count > 0;
         }
 
         private void FillDataGrid(List<CrmView> list)
@@ -529,9 +543,13 @@ namespace Carfup.XTBPlugins.ViewRenamer
 
         private void btnRevertReplace_Click(object sender, EventArgs e)
         {
-            var from = tbReplaceFrom.Text;
-            tbReplaceFrom.Text = tbReplaceTo.Text;
-            tbReplaceTo.Text = from;
+            (tbReplaceFrom.Text, tbReplaceTo.Text) = (tbReplaceTo.Text, tbReplaceFrom.Text);
+        }
+
+        private void tsbSavePublish_Click(object sender, EventArgs e)
+        {
+            ExecuteMethod(SaveViews, true);
+            ExecuteMethod(PublishChanges);
         }
     }
 }
