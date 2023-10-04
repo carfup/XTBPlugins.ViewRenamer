@@ -518,12 +518,12 @@ namespace Carfup.XTBPlugins.ViewRenamer
 
         private void tbReplaceFrom_TextChanged(object sender, EventArgs e)
         {
-            btnReplaceText.Enabled = !String.IsNullOrEmpty(tbReplaceFrom.Text) && !String.IsNullOrEmpty(tbReplaceTo.Text);
+            btnReplaceText.Enabled = !String.IsNullOrEmpty(tbReplaceFrom.Text); // && !String.IsNullOrEmpty(tbReplaceTo.Text);
         }
 
         private void tbReplaceTo_TextChanged(object sender, EventArgs e)
         {
-            btnReplaceText.Enabled = !String.IsNullOrEmpty(tbReplaceFrom.Text) && !String.IsNullOrEmpty(tbReplaceTo.Text);
+            btnReplaceText.Enabled = !String.IsNullOrEmpty(tbReplaceFrom.Text); // && !String.IsNullOrEmpty(tbReplaceTo.Text);
         }
 
         private void btnLoadEntities_Click(object sender, EventArgs e)
