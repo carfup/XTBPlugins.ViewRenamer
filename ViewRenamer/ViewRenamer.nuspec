@@ -1,7 +1,7 @@
 ﻿<package>
   <metadata>
     <id>Carfup.XTBPlugins.ViewRenamer</id>
-    <version>1.2023.6.4</version>
+    <version>1.2023.10.5</version>
     <title>View Renamer</title>
     <authors>Clement Olivier</authors>
     <owners>Clement Olivier</owners>
@@ -10,7 +10,10 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>If you want to rename your views in several languages in few clicks, this is the tool you are looking for !</description>
     <summary>Rename your views in few clicks.</summary>
-    <releaseNotes>
+    <releaseNotes>      
+1.2023.10.5
+Allow to replace content with blank value in the to field.
+
 1.2023.6.4
 Added LogicalName in the Tables list in order to differentiate those with the same Display names
 added new Publish and Save button.
