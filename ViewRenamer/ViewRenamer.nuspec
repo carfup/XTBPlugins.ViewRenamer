@@ -1,7 +1,7 @@
 ﻿<package>
   <metadata>
     <id>Carfup.XTBPlugins.ViewRenamer</id>
-    <version>1.2023.10.5</version>
+    <version>1.2024.1.6</version>
     <title>View Renamer</title>
     <authors>Clement Olivier</authors>
     <owners>Clement Olivier</owners>
@@ -10,7 +10,10 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>If you want to rename your views in several languages in few clicks, this is the tool you are looking for !</description>
     <summary>Rename your views in few clicks.</summary>
-    <releaseNotes>      
+    <releaseNotes>    
+1.2024.1.6  
+Fix random issues related to the instance of telemetry
+    
 1.2023.10.5
 Allow to replace content with blank value in the to field.
 
